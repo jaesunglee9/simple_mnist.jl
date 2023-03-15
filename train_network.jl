@@ -4,7 +4,7 @@
 
 
 
-using MLDatasets, PlutoUI, JLD2
+using MLDatasets, JLD2
 include("functions.jl")
 
 train_x, train_y = MNIST(split=:train)[:]
@@ -23,7 +23,3 @@ else
     n_label = max(train_y...)+1
     network = initialize_network(input_dim, h_layer, n_label)
 end
-
-gradient_descent!(network, train_x, train_y, iters, lr)
-
-jldsave("network.jld2"; network)
