@@ -13,6 +13,9 @@ md"""
 A simple neural network with one hidden layer with no autodifferentiation or external libraries
 """
 
+# ╔═╡ f61e4d51-d4a2-4b0e-bce1-832ff5694b0c
+
+
 # ╔═╡ c2c649e1-d88d-47bc-8d8b-a33c9e1788df
 # Don't manipulate labels, since the labels are used to test the network
 begin 
@@ -28,6 +31,11 @@ begin
 	lr = 0.3
 	iters = 100
 end
+
+# ╔═╡ dc9794ff-6204-4fb9-9d27-eee031692009
+# with_terminal() do
+# 	gradient_descent!(network, train_x, train_y, iters, lr)
+# end
 
 # ╔═╡ 6de78483-2dc5-4a22-ae2a-a01075dd3b76
 function accuracy(A, Y)
@@ -183,22 +191,18 @@ end
 # ╔═╡ 1dbf3dd8-df06-4b09-8259-47b50b1dfc57
 # Network initialization
 begin
-	h_layer = [32]  
-	input_dim = size(train_x)[1]
-	n_label = max(train_y...)+1
-	network = initialize_network(input_dim, h_layer, n_label)
-end
-
-# ╔═╡ dc9794ff-6204-4fb9-9d27-eee031692009
-with_terminal() do
-	gradient_descent!(network, train_x, train_y, iters, lr)
+	if isfile("network.jl2")
+		jldload("network.jl2"; network)
+	else
+		h_layer = [32]  
+		input_dim = size(train_x)[1]
+		n_label = max(train_y...)+1
+		network = initialize_network(input_dim, h_layer, n_label)
+	end
 end
 
 # ╔═╡ b0e92bf4-5ebc-439d-ba17-c3b6a98758c1
 jldsave("network.jld2"; network)
-
-# ╔═╡ 6d419889-4f5c-465a-ba91-7828ab3c531c
-network.W[1]
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -219,7 +223,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "4d52ad4b1143a9a4423504182e3e57f72d6c6b33"
+project_hash = "a893e48a08bc97297d2bb027870d4d05478a8f64"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -1151,12 +1155,12 @@ version = "17.4.0+0"
 # ╔═╡ Cell order:
 # ╟─745b3081-b197-4cc3-8c15-95bbbbcc82b5
 # ╠═2cfdf038-c16a-11ed-3db7-5de4cca46bb9
+# ╠═f61e4d51-d4a2-4b0e-bce1-832ff5694b0c
 # ╠═c2c649e1-d88d-47bc-8d8b-a33c9e1788df
 # ╠═ff370039-a8f3-47a4-a9cb-0146f4aed56d
 # ╠═1dbf3dd8-df06-4b09-8259-47b50b1dfc57
 # ╠═dc9794ff-6204-4fb9-9d27-eee031692009
 # ╠═b0e92bf4-5ebc-439d-ba17-c3b6a98758c1
-# ╠═6d419889-4f5c-465a-ba91-7828ab3c531c
 # ╟─bbd8553d-bd86-4f5a-9679-e654a1ff740b
 # ╟─6de78483-2dc5-4a22-ae2a-a01075dd3b76
 # ╟─73ef329c-a55d-465b-af1c-221a630a8485
