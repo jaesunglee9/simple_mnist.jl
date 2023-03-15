@@ -15,6 +15,8 @@ test_x = reshape(test_x, :, size(test_x)[3])
 lr = 0.3
 iters = 100
 
+gradient_descent!(network) = gradient_descent!(network, train_x, train_y, iters, lr)
+
 if isfile("network.jl2")
     jldload("network.jl2"; network)
 else
